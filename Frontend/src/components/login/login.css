@@ -1,0 +1,371 @@
+/* Color Palette & Variables */
+:root {
+  --bg-color: #FAF6EF;
+  --primary: #8B5E3C;
+  --primary-hover: #6F472C;
+  --text-main: #1F2937;
+  --text-muted: #6B7280;
+  --border: #E5E7EB;
+  --error: #DC2626;
+  --success: #16A34A;
+  --white: #FFFFFF;
+  --radius-xl: 16px;
+  --radius-md: 8px;
+  --transition: all 0.2s ease-in-out;
+}
+/* Container */
+
+
+
+/* Thin cream line */
+
+/* Base Layout */
+.login-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  font-family: 'Inter', sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 10px 10px 5px rgb(19, 22, 23);
+  overflow: hidden;
+}
+.login-container::before {
+  content: "";
+  position: absolute;
+  /* Exact size match */
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background-color: #C29638;
+  
+  /* Exact positioning relative to viewport edges */
+  top: 5%;
+  right: -210px; /* Half off-screen on desktop */
+  z-index: 0;
+  transition: all 0.3s ease;
+}
+
+/* 3. Bottom-Left Gold Circle */
+.login-container::after {
+  content: "";
+  position: absolute;
+  /* Exact size match */
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  background-color: #C29638;
+  
+  /* Exact positioning relative to viewport edges */
+  bottom: -180px; /* Cut off perfectly at the baseline */
+  left: -150px;
+  z-index: 0;
+  transition: all 0.3s ease;
+}
+
+.top-header-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px; /* Adjust thickness as needed based on your Figma file */
+  background-color: #7A1E2C;
+  
+  /* Bottom rounded corners (xl equivalent) */
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  
+  z-index: 1; /* Keeps it layered correctly below any modal overlays if applicable */
+}
+.login-container h1{
+    font-family: 'Gravitas One', serif;
+    color:#7A1E2C;
+    font-style: normal;
+}
+.login-container h2{
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #000;
+  font-size: 35px;
+}
+.login-container hr{
+  border: 3px solid #BB922E;
+  height: 0px;
+  border-radius: 5px;
+  width: 100px;
+  color: #BB922E;
+  background-color: #BB922E;
+  margin-bottom:10px;
+}
+
+/* Card & Animations */
+.login-card {
+  position: relative;
+  z-index: 2;  
+  background: var(--white);
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.5s ease-out-forward;
+  box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header Typography */
+.brand-header {
+  text-align: center;
+  margin-bottom: 42px;
+}
+
+.brand-logo {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.brand-title {
+  color: var(--text-main);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.brand-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Form Layout */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.form-label {
+  font-family: "Playfair Display", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  color: var(--text-main);
+}
+
+/* Input Fields */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px 12px 42px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  transition: var(--transition);
+  background-color: var(--white);
+}
+
+.form-input.has-toggle {
+  padding-right: 4px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px #BB922E;
+}
+
+.form-input.has-error {
+  border-color: var(--error);
+}
+
+.form-input.has-error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+/* Password Toggle Visibility Button */
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.password-toggle:focus {
+  outline: 2px solid var(--primary);
+}
+
+/* Options (Remember me & Forgot password) */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.checkbox-label input {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+}
+
+.forgot-link, .footer-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.forgot-link:hover, .footer-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Buttons & State Feedbacks */
+.btn-submit {
+  background-color: #BB922E;
+  color: var(--white);
+  border: none;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #FBC02D;
+}
+
+.btn-submit:click:not(:disabled) {
+  outline: none;
+  background-color: #cea744;
+}
+
+.btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Feedback Messages */
+.error-msg {
+  color: var(--error);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.alert-error {
+  background-color: rgba(220, 38, 38, 0.1);
+  border: 1px solid var(--error);
+  color: var(--error);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+/* Spinner */
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--white);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Footer layout */
+.form-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 24px;
+    box-shadow: none;
+    background: transparent;
+  }
+}
+@media (max-width: 1024px) {
+  /* Scale down the elements on smaller viewports so they don't crowd the card */
+  .login-container::before {
+    width: 280px;
+    height: 280px;
+    right: -140px;
+    top: 2%;
+  }
+  
+  .login-container::after {
+    width: 300px;
+    height: 300px;
+    left: -100px;
+    bottom: -100px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* On compact mobile screens, push them further out to keep form fields highly readable */
+  .login-container::before {
+    width: 200px;
+    height: 200px;
+    right: -100px;
+  }
+  
+  .login-container::after {
+    width: 220px;
+    height: 220px;
+    left: -90px;
+    bottom: -90px;
+  }
+}
