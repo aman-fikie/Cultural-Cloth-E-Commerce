@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState, useId, memo } from 'react';
 import './login.css';
 
@@ -184,7 +185,9 @@ export default function Login() {
         <footer class="form-footer">
           <p>
             Don't have an account?{' '}
-            <a href="/signup" className="footer-link">Sign Up</a>
+           <Link to="/signup" className="footer-link">
+             Sign Up
+           </Link>
           </p>
         </footer>
       </article>
