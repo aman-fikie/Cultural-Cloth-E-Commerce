@@ -1,0 +1,504 @@
+@import url('https://fonts.googleapis.com/css2?family=Gravitas+One&family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  --color-primary: #7A1E2C;
+  --color-secondary: #C8A44D;
+  --color-bg: #FAF6EF;
+  --color-card: #FFFFFF;
+  --color-accent: #2E5D50;
+  --color-text-main: #2B2B2B;
+  --color-text-sub: #6B6B6B;
+  --color-border: #E5E5E5;
+  --color-error: #D92D20;
+  --color-success: #16A34A;
+}
+
+.pageWrapper {
+  position: relative;
+  width:100vw;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.top-header-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px; /* Adjust thickness as needed based on your Figma file */
+  background-color: #7A1E2C;
+  
+  /* Bottom rounded corners (xl equivalent) */
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  
+  z-index: 1; /* Keeps it layered correctly below any modal overlays if applicable */
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 450px;
+  background: var(--color-card);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(11, 8, 8, 0.03);
+  padding: 36px 40px;
+  box-sizing: border-box;
+  z-index: 2;
+
+}
+.pageWrapper::before {
+  content: "";
+  position: absolute;
+  /* Exact size match */
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background-color: #C29638;
+  
+  /* Exact positioning relative to viewport edges */
+  top: 5%;
+  right: -210px; /* Half off-screen on desktop */
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+.pageWrapper::after {
+  content: "";
+  position: absolute;
+  /* Exact size match */
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  background-color: #C29638;
+  
+  /* Exact positioning relative to viewport edges */
+  bottom: -180px; /* Cut off perfectly at the baseline */
+  left: -150px;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+/* Header Definitions */
+.formHeader {
+  text-align: center;
+  margin-bottom: 3px;
+}
+
+.brandTitle {
+  font-family: 'Gravitas One', serif;
+  color: var(--color-primary);
+  font-size: 1.75rem;
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.brandSubtitle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--color-text-main);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.elegantDivider {
+  width: 40px;
+  height: 2px;
+  background-color: var(--color-secondary);
+  margin: 16px auto 0 auto;
+}
+
+/* Step Wizard Navigation Bar Elements */
+.indicatorContainer {
+  margin-bottom: 20px;
+}
+
+.stepText {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-sub);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.progressTrack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.stepDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: all 300ms ease;
+}
+
+.stepDotPending {
+  background-color: var(--color-border);
+}
+
+.stepDotActive {
+  background-color: #BB922E;
+  transform: scale(1.2);
+  box-shadow: 0 0 0 4px rgba(122, 30, 44, 0.15);
+}
+
+.stepDotCompleted {
+  background-color: #BB922E;
+}
+
+.stepLine {
+  flex: 1;
+  height: 2px;
+  background-color: var(--color-border);
+  margin: 0 8px;
+  transition: background-color 300ms ease;
+}
+
+.stepLineCompleted {
+  background-color: #BB922E;
+}
+
+/* Input Fields & Layout Engine Blueprint */
+.formBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fieldContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.fieldLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-main);
+  text-align: left;
+  font-family: "Playfair Display", serif;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputElement, .selectElement, .textareaElement {
+  width: 100%;
+  height: 40px;
+  padding: 2px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: var(--color-text-main);
+  box-sizing: border-box;
+  line-height: normal;
+  vertical-align: middle;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.textareaElement {
+  height: 120px;
+  padding: 16px 18px;
+  resize: none;
+}
+
+.inputElement:focus, .selectElement:focus, .textareaElement:focus {
+  outline: none;
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 0 3px #BB922E;
+}
+
+.inputErrorBorder {
+  border-color: var(--color-error) !important;
+}
+
+.errorMessage {
+  color: var(--color-error);
+  font-size: 0.8rem;
+  margin: 4px 0 0 0;
+  font-weight: 400;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 18px;
+  background: none;
+  border: none;
+  color: var(--color-text-sub);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* File Upload Engine Layout */
+.uploadZone {
+  border: 2px dashed var(--color-border);
+  border-radius: 14px;
+  padding: 32px;
+  text-align: center;
+  background: var(--color-bg);
+  cursor: pointer;
+  transition: all 300ms ease;
+}
+
+.uploadZoneActive {
+  border-color: var(--color-secondary);
+  background: rgba(200, 164, 77, 0.05);
+}
+
+.uploadZoneSuccess {
+  border-color: var(--color-accent);
+  background: rgba(46, 93, 80, 0.02);
+}
+
+.uploadPrompt p {
+  margin: 12px 0 4px 0;
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+}
+
+.highlightText {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.uploadPrompt small {
+  color: var(--color-text-sub);
+}
+
+.uploadSuccessState {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.successBadge {
+  background: var(--color-accent);
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.fileMeta {
+  flex: 1;
+  margin-left: 16px;
+}
+
+.fileName {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.fileSize {
+  font-size: 0.8rem;
+  color: var(--color-text-sub);
+  margin: 2px 0 0 0;
+}
+
+.removeFileBtn, .avatarRemoveBtn {
+  background: none;
+  border: none;
+  color: var(--color-error);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Avatar Management UI */
+.avatarFlexRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.avatarCircularFrame {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarActionColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.avatarBrowseBtn {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* Time Picker & Structural Layout Utilities */
+.timePickerRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.timeInputWrapper {
+  flex: 1;
+}
+
+.timeToText {
+  color: var(--color-text-sub);
+  font-weight: 600;
+}
+
+.charCounter {
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--color-text-sub);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Action Navigation Controls */
+.navigationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.backButton {
+  background-color: #BB922E;
+  color: var(--color-card);
+  border: none;
+  padding: 0 32px;
+  height: 54px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.backButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.backButton:hover:not(:disabled) {
+  transform: scale(1.02);
+  filter: brightness(0.9);
+}
+
+.primaryButton {
+  background-color: #BB922E;
+  color: var(--color-card);
+  border: none;
+  padding: 0 32px;
+  height: 54px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.primaryButton:hover:not(:disabled) {
+  transform: scale(1.02);
+  filter: brightness(0.9);
+}
+
+/* Micro-animations Engine */
+.stepFadeAnimation {
+  animation: fadeInSlide 350ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Media Query Responsiveness Framework */
+@media (max-width: 768px) {
+  .cardContainer {
+    width: 90%;
+    padding: 36px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cardContainer {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 24px 16px;
+  }
+  .pageWrapper {
+    padding: 0;
+    align-items: flex-start;
+  }
+}
+.loginRedirectText {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-sub);
+  margin-top: 24px;
+}
+
+.loginLink {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 300ms ease;
+}
+
+.loginLink:hover {
+  color: var(--color-secondary);
+  text-decoration: underline;
+}
