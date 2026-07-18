@@ -6,16 +6,18 @@ import heroImg from './assets/hero.png'
 import './App.css'
 import Login from './components/login/login.jsx';
 import RegistrationPage from './components/registration/RegistrationPage.jsx';
-
+import Dashboard from './components/dashboard/Dashboard';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
      <Routes>
-      <Route path="/" element={<Login />} />
+      {/* set my login page as default route */}
+      <Route path="*" element={<Login />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<RegistrationPage />} />
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   )
 }

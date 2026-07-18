@@ -3,7 +3,8 @@ import { z } from 'zod';
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 const ACCEPTED_FILE_TYPES = ['application/pdf', 'image/png', 'image/jpeg'];
 
-export const step1Schema = z.object({
+// --- Step 1: base object (no .refine yet) ---
+const step1Base = z.object({
   fullName: z.string().min(2, 'Full name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   password: z
@@ -15,11 +16,15 @@ export const step1Schema = z.object({
     .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
   confirmPassword: z.string(),
   gender: z.enum(['male', 'female'], { errorMap: () => ({ message: 'Please select your gender' }) }),
-}).refine((data) => data.password === data.confirmPassword, {
+});
+
+// Step 1 schema used for per-step validation (WITH the password match check)
+export const step1Schema = step1Base.refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
   path: ["confirmPassword"],
 });
 
+// --- Step 2 ---
 export const step2Schema = z.object({
   businessLicense: z
     .any()
@@ -34,6 +39,7 @@ export const step2Schema = z.object({
   shopName: z.string().optional(),
 });
 
+// --- Step 3 ---
 export const step3Schema = z.object({
   profilePhoto: z
     .any()
@@ -48,13 +54,13 @@ export const step3Schema = z.object({
   shopDescription: z.string().max(300, 'Description cannot exceed 300 characters').optional(),
 });
 
-export const registrationSchema = z.object({
-  ...step1Schema.shape,
-  ...step2Schema.shape,
-  ...step3Schema.shape,
-});
+// --- Combined schema for final submit (uses .merge on real objects, not .shape spread) ---
+export const registrationSchema = step1Base
+  .merge(step2Schema)
+  .merge(step3Schema)
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
-// In JS files we cannot use TypeScript type aliases. If you need the type
-// in TypeScript code, import this file as a module and infer the type there
-// or convert this file to .ts/.tsx. For now, export the schema itself.
 export const RegistrationFormData = registrationSchema;

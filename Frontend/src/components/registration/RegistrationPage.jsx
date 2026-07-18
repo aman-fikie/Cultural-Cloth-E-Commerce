@@ -1,4 +1,3 @@
-// Registration.tsx
 import React, { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -10,13 +9,68 @@ import { FileUpload } from './components/FileUpload';
 import { TimePicker } from './components/TimePicker';
 import { NavigationButtons } from './components/NavigationButtons';
 import styles from './Registration.module.css';
+import { useNavigate } from 'react-router-dom';
+import api from '../../api/api';
 
 export const RegistrationPage = () => {
   const [profilePreview, setProfilePreview] = useState(null);
+  const [showSuccess, setShowSuccess] = useState(false); // Manages successful registration popup
+  const [errorMessage, setErrorMessage] = useState(''); // Manages error alerts gracefully
+  const [isSubmitting, setIsSubmitting] = useState(false); // Prevents duplicate submits
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log('Production Payload standard payload structural validation complete:', data);
-    // Execute production unified API post sequence here
+  const onSubmit = async (data) => {
+    try {
+      setIsSubmitting(true);
+      setErrorMessage('');
+      const formData = new FormData();
+      
+      const formValues = methods.getValues();
+
+      // Append all text values (exactly matching what register.php expects in $_POST)
+      formData.append('fullName', formValues.fullName);
+      formData.append('email', formValues.email);
+      formData.append('password', formValues.password);
+      formData.append('confirmPassword', formValues.confirmPassword);
+      formData.append('gender', formValues.gender || '');
+      formData.append('phoneNumber', formValues.phoneNumber || '');
+      formData.append('location', formValues.location || '');
+      formData.append('shopName', formValues.shopName || '');
+      formData.append('startTime', formValues.startTime || '');
+      formData.append('endTime', formValues.endTime || '');
+      formData.append('shopDescription', formValues.shopDescription || '');
+
+      // Append Business License File
+      if (data.businessLicense && data.businessLicense[0]) {
+        formData.append('businessLicense', data.businessLicense[0]);
+      }
+
+      // Append Profile Photo File
+      if (data.profilePhoto && data.profilePhoto[0]) {
+        formData.append('profilePhoto', data.profilePhoto[0]);
+      }
+
+      console.log("Data sent to PHP:", Object.fromEntries(formData.entries()));
+
+      const response = await api.post('/register.php', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      if (response.data.success) {
+        // Show the beautiful toast popup
+        setShowSuccess(true);
+        
+        // Wait 1.5 seconds before pushing to login page
+        setTimeout(() => {
+          navigate('/login');
+        }, 1500);
+      }
+    } catch (err) {
+      console.error("Registration error:", err.response?.data || err.message);
+      setErrorMessage(err.response?.data?.message || "Registration failed. Please check your fields.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const { currentStep, methods, handleNext, handleBack, isFirstStep, isLastStep } = useRegistrationForm(onSubmit);
@@ -34,7 +88,58 @@ export const RegistrationPage = () => {
 
   return (
     <div className={styles.pageWrapper}>
-      <div class="top-header-bar" aria-hidden="true"></div>
+      <div className="top-header-bar" aria-hidden="true"></div>
+      
+      {/* SUCCESS POPUP NOTIFICATION */}
+      {showSuccess && (
+        <div style={{
+          position: 'fixed',
+          top: '24px',
+          right: '24px',
+          backgroundColor: '#10b981', // Elegant Emerald Green
+          color: '#ffffff',
+          padding: '16px 24px',
+          borderRadius: '8px',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          zIndex: 9999,
+          fontFamily: 'system-ui, sans-serif'
+        }}>
+          <span style={{ fontSize: '20px' }}>✅</span>
+          <div>
+            <strong style={{ display: 'block', fontSize: '15px' }}>Registration Successful!</strong>
+            <span style={{ fontSize: '13px', opacity: 0.9 }}>Redirecting you to login...</span>
+          </div>
+        </div>
+      )}
+
+      {/* ERROR POPUP NOTIFICATION */}
+      {errorMessage && (
+        <div style={{
+          position: 'fixed',
+          top: '24px',
+          right: '24px',
+          backgroundColor: '#ef4444', // Crimson Red
+          color: '#ffffff',
+          padding: '16px 24px',
+          borderRadius: '8px',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          zIndex: 9999,
+          fontFamily: 'system-ui, sans-serif'
+        }}>
+          <span style={{ fontSize: '20px' }}>❌</span>
+          <div>
+            <strong style={{ display: 'block', fontSize: '15px' }}>Error Encountered</strong>
+            <span style={{ fontSize: '13px', opacity: 0.9 }}>{errorMessage}</span>
+          </div>
+        </div>
+      )}
+
       <main className={styles.cardContainer}>
         <header className={styles.formHeader}>
           <h1 className={styles.brandTitle}>Cultural Cloth</h1>
@@ -55,7 +160,7 @@ export const RegistrationPage = () => {
                 <InputField name="confirmPassword" label="Confirm Password" type="password" placeholder="••••••••" required />
                 <SelectField 
                   name="gender" 
-                  label="Gender Description Preference" 
+                  label="Gender :" 
                   options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]} 
                 />
               </div>
@@ -124,16 +229,17 @@ export const RegistrationPage = () => {
               isFirstStep={isFirstStep} 
               isLastStep={isLastStep} 
               isValid={isValid}
+              disabled={isSubmitting} // Lock buttons while submitting
             />
           </form>
         </FormProvider>
         <p className={styles.loginRedirectText}>
           Already have an account?{" "}
           <Link to="/login" className={styles.loginLink}>Login</Link>
-      </p>
+        </p>
       </main>
-      
     </div>
   );
 };
+
 export default RegistrationPage;
