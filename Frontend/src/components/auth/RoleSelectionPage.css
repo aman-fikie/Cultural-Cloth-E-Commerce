@@ -1,0 +1,256 @@
+/* ==========================================================================
+   ROLE SELECTION PAGE STYLES - CULTURAL CLOTH
+   ========================================================================== */
+
+/* Root Layout Container */
+.role-selection-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #FDFBF7; /* Warm background matching cultural tones */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Decorative Maroon Top Bar */
+.top-header-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #7A1E2C 0%, #A3283B 50%, #C8A44D 100%);
+  z-index: 100;
+}
+
+/* Main Card Shell */
+.role-selection-card {
+  background: #FFFFFF;
+  width: 100%;
+  max-width: 520px;
+  padding: 40px 36px;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(122, 30, 44, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid #F0EAE1;
+  text-align: center;
+  box-sizing: border-box;
+  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Entrance Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Header Section */
+.brand-header {
+  margin-bottom: 24px;
+}
+
+.brand-title {
+  color: #7A1E2C;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px 0;
+}
+
+.brand-subtitle {
+  color: #4A5568;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+}
+
+.brand-header hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #C8A44D, transparent);
+  margin: 0 auto;
+  width: 60%;
+}
+
+/* Context Subtitle Text */
+.role-description {
+  font-size: 14px;
+  color: #64748B;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.role-description strong {
+  color: #1E293B;
+  font-weight: 600;
+}
+
+/* Action Buttons Container */
+.role-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Base Role Card Button */
+.role-btn {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background-color: #FFFFFF;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+  position: relative;
+  outline: none;
+}
+
+/* Emoji / Icon Container */
+.role-icon {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+/* Inner Text Grouping */
+.role-btn div {
+  display: flex;
+  flex-direction: column;
+}
+
+.role-btn strong {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  transition: color 0.2s ease;
+}
+
+.role-btn span {
+  font-size: 13px;
+  color: #64748B;
+  font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+   OPTION 1: BUYER BUTTON (Maroon Theme)
+   -------------------------------------------------------------------------- */
+.buyer-btn {
+  border: 1.5px solid #7A1E2C;
+  background: #FFF8F8;
+}
+
+.buyer-btn .role-icon {
+  background-color: rgba(122, 30, 44, 0.08);
+}
+
+.buyer-btn strong {
+  color: #7A1E2C;
+}
+
+.buyer-btn:hover {
+  background-color: #7A1E2C;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(122, 30, 44, 0.22);
+}
+
+.buyer-btn:hover .role-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.buyer-btn:hover strong,
+.buyer-btn:hover span {
+  color: #FFFFFF;
+}
+
+/* --------------------------------------------------------------------------
+   OPTION 2: SELLER BUTTON (Gold Theme)
+   -------------------------------------------------------------------------- */
+.seller-btn {
+  border: 1.5px solid #C8A44D;
+  background: #FFFCF3;
+}
+
+.seller-btn .role-icon {
+  background-color: rgba(200, 164, 77, 0.12);
+}
+
+.seller-btn strong {
+  color: #A07F2E;
+}
+
+.seller-btn:hover {
+  background-color: #C8A44D;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(200, 164, 77, 0.3);
+}
+
+.seller-btn:hover .role-icon {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+.seller-btn:hover strong,
+.seller-btn:hover span {
+  color: #FFFFFF;
+}
+
+/* Active / Pressed States */
+.role-btn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN (Mobile adjustments)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .role-selection-card {
+    padding: 28px 20px;
+  }
+
+  .brand-title {
+    font-size: 24px;
+  }
+
+  .brand-subtitle {
+    font-size: 16px;
+  }
+
+  .role-btn {
+    padding: 14px 16px;
+    gap: 14px;
+  }
+
+  .role-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .role-btn strong {
+    font-size: 15px;
+  }
+
+  .role-btn span {
+    font-size: 12px;
+  }
+}

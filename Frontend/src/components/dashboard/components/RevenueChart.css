@@ -1,0 +1,57 @@
+.chart-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(200, 164, 77, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.chart-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.15rem;
+  color: #7A1E2C;
+  margin: 0;
+  font-weight: 700;
+}
+
+.chart-subtitle {
+  font-size: 0.8rem;
+  color: #757575;
+  margin: 0.2rem 0 0 0;
+}
+
+.chart-legend-pills {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.legend-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-pill::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legend-pill.revenue::before { background-color: #7A1E2C; }
+.legend-pill.target::before { background-color: #C8A44D; }
+
+.recharts-wrapper-container {
+  width: 100%;
+}

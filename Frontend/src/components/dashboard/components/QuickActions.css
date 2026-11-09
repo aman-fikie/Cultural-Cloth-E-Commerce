@@ -1,0 +1,54 @@
+.quick-actions-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(200, 164, 77, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.actions-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1rem;
+  color: #7A1E2C;
+  margin: 0 0 0.85rem 0;
+}
+
+.actions-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-button.primary {
+  background-color: #7A1E2C;
+  color: #FFFFFF;
+  border: none;
+}
+
+.action-button.primary:hover {
+  background-color: #5c1621;
+  box-shadow: 0 4px 12px rgba(122, 30, 44, 0.2);
+}
+
+.action-button.secondary {
+  background-color: #FAF6EF;
+  color: #2B2B2B;
+  border: 1px solid rgba(200, 164, 77, 0.3);
+}
+
+.action-button.secondary:hover {
+  background-color: #7A1E2C;
+  color: #FFFFFF;
+}

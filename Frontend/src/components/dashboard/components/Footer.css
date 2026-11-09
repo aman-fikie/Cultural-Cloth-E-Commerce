@@ -1,0 +1,28 @@
+.dashboard-footer {
+  background-color: #FFFFFF;
+  border-top: 1px solid rgba(200, 164, 77, 0.2);
+  padding: 1.25rem 2rem;
+  margin-top: auto;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #757575;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: #757575;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #7A1E2C;
+}

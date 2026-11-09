@@ -1,0 +1,245 @@
+.top-navbar {
+  height: 80px;
+  background-color: #FFFFFF;
+  border-bottom: 1px solid rgba(200, 164, 77, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mobile-menu-toggle {
+  display: none;
+  color: #7A1E2C;
+}
+
+.navbar-page-title h1 {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.3rem;
+  color: #7A1E2C;
+  margin: 0;
+  font-weight: 700;
+}
+
+.navbar-date {
+  font-size: 0.8rem;
+  color: #757575;
+  font-weight: 500;
+}
+
+.navbar-center {
+  flex: 1;
+  max-width: 420px;
+  margin: 0 2rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #FAF6EF;
+  border: 1px solid rgba(200, 164, 77, 0.3);
+  border-radius: 8px;
+  padding: 0.55rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.search-box:focus-within {
+  border-color: #7A1E2C;
+  box-shadow: 0 0 0 3px rgba(122, 30, 44, 0.08);
+}
+
+.search-icon {
+  color: #7A1E2C;
+  font-size: 1.1rem;
+  margin-right: 0.6rem;
+}
+
+.search-box input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  color: #2B2B2B;
+  font-size: 0.9rem;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.action-icon-btn {
+  background: #FAF6EF;
+  border: 1px solid rgba(200, 164, 77, 0.25);
+  color: #7A1E2C;
+  font-size: 1.2rem;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.action-icon-btn:hover {
+  background-color: #7A1E2C;
+  color: #FFFFFF;
+}
+
+.btn-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: #C8A44D;
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #FFFFFF;
+}
+
+.btn-badge.primary {
+  background-color: #7A1E2C;
+}
+
+.profile-menu-container {
+  position: relative;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 8px;
+}
+
+.avatar-img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #C8A44D;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.profile-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #2B2B2B;
+}
+
+.profile-store {
+  font-size: 0.75rem;
+  color: #757575;
+}
+
+.chevron-icon {
+  color: #757575;
+  transition: transform 0.2s ease;
+}
+
+.chevron-icon.rotated {
+  transform: rotate(180deg);
+}
+
+.profile-dropdown-card {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 220px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  border: 1px solid rgba(200, 164, 77, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 0.75rem 0;
+  z-index: 100;
+}
+
+.dropdown-header {
+  padding: 0.5rem 1.25rem;
+}
+
+.dropdown-user {
+  font-weight: 600;
+  color: #7A1E2C;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.dropdown-role {
+  font-size: 0.75rem;
+  color: #757575;
+  margin: 0;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #FAF6EF;
+  margin: 0.5rem 0;
+}
+
+.profile-dropdown-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-item {
+  width: 100%;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 1.25rem;
+  color: #2B2B2B;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #FAF6EF;
+  color: #7A1E2C;
+}
+
+.dropdown-item.logout {
+  color: #FF5252;
+}
+
+@media (max-width: 1024px) {
+  .mobile-menu-toggle {
+    display: flex;
+  }
+  .navbar-center {
+    display: none;
+  }
+}

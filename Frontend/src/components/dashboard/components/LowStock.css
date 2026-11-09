@@ -1,0 +1,64 @@
+.warning-icon {
+  color: #FF5252;
+}
+
+.stock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stock-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.stock-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.stock-details {
+  flex: 1;
+}
+
+.product-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2B2B2B;
+  display: block;
+}
+
+.progress-bar-bg {
+  height: 6px;
+  background-color: #FAF6EF;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 0.35rem 0;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #FF5252;
+  border-radius: 3px;
+}
+
+.stock-count {
+  font-size: 0.72rem;
+  color: #FF5252;
+  font-weight: 700;
+}
+
+.restock-btn {
+  background-color: #7A1E2C;
+  color: #FFFFFF;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}

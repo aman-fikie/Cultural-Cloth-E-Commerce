@@ -1,0 +1,136 @@
+.table-card {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(200, 164, 77, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.table-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.table-title {
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.15rem;
+  color: #7A1E2C;
+  margin: 0;
+  font-weight: 700;
+}
+
+.table-subtitle {
+  font-size: 0.8rem;
+  color: #757575;
+  margin: 0.2rem 0 0 0;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  color: #7A1E2C;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.table-responsive-wrapper {
+  overflow-x: auto;
+}
+
+.luxury-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.luxury-table th {
+  background-color: #FAF6EF;
+  color: #7A1E2C;
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 700;
+  padding: 0.85rem 1rem;
+  border-bottom: 2px solid rgba(200, 164, 77, 0.2);
+}
+
+.luxury-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #FAF6EF;
+  color: #2B2B2B;
+}
+
+.luxury-table tr:hover {
+  background-color: rgba(250, 246, 239, 0.5);
+}
+
+.order-id {
+  color: #7A1E2C;
+}
+
+.customer-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.customer-cell img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.customer-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.customer-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.customer-email {
+  font-size: 0.75rem;
+  color: #757575;
+}
+
+.status-pill {
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.status-completed { background-color: rgba(46, 93, 80, 0.1); color: #2E5D50; }
+.status-processing { background-color: rgba(200, 164, 77, 0.15); color: #C8A44D; }
+.status-pending { background-color: rgba(255, 152, 0, 0.1); color: #FF9800; }
+.status-cancelled { background-color: rgba(255, 82, 82, 0.1); color: #FF5252; }
+
+.action-group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  color: #757575;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 4px;
+}
+
+.action-btn:hover {
+  background-color: #FAF6EF;
+  color: #7A1E2C;
+}
+
+.text-right { text-align: right; }
+.font-bold { font-weight: 700; }

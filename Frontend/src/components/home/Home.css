@@ -1,0 +1,251 @@
+/* ==========================================================================
+   1. DESIGN SYSTEM VARIABLES
+   ========================================================================== */
+:root {
+  /* Color Palette */
+  --primary: #7A1E2C;
+  --secondary: #C8A44D;
+  --background: #FAF6EF;
+  --surface: #FFFFFF;
+  --accent: #2E5D50;
+  --text: #2B2B2B;
+
+  /* Layout Boundaries */
+  --max-width: 1280px;
+
+  /* Global Layout Spacing Tokens */
+  --section-padding-desktop: 100px 0;
+  --section-padding-tablet: 70px 0;
+  --section-padding-mobile: 50px 0;
+
+  --inline-padding-desktop: 2rem;
+  --inline-padding-tablet: 1.5rem;
+  --inline-padding-mobile: 1rem;
+
+  /* Architectural Utilities Defaults */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --shadow-base: 0 10px 30px rgba(43, 43, 43, 0.06);
+  --transition-fast: 0.3s ease;
+}
+
+/* ==========================================================================
+   2. GLOBAL RESET & BASE TYPOGRAPHY
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Jost', 'Montserrat', 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Structural Base Typography Scale Defaults */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Cinzel', 'Didot', 'Playfair Display', serif;
+  color: var(--text);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: 1px;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   3. STRUCTURAL ARCHITECTURE & LAYOUT MANIFOLD
+   ========================================================================== */
+.home {
+  width: 100%;
+  position: relative;
+  background-color: var(--background);
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Core Structural Reusable Constrained Alignment Grid */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--inline-padding-desktop);
+  padding-right: var(--inline-padding-desktop);
+}
+
+/* ==========================================================================
+   4. RUNTIME SECTION SPACING & ROW ALTERNATION
+   ========================================================================== */
+.section {
+  width: 100%;
+  padding: var(--section-padding-desktop);
+  position: relative;
+}
+
+/* Row Pattern Alternations */
+.section-light {
+  background-color: var(--surface);
+}
+
+.section-dark {
+  background-color: var(--background);
+}
+
+.page-spacing {
+  gap: 2rem;
+}
+
+/* ==========================================================================
+   5. COMPACT UTILITY CLASSES MATRIX
+   ========================================================================== */
+.text-center {
+  text-align: center !important;
+}
+
+.flex-center {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.grid-center {
+  display: grid !important;
+  place-items: center !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.show {
+  display: block !important;
+}
+
+.shadow {
+  box-shadow: var(--shadow-base) !important;
+}
+
+.rounded {
+  border-radius: var(--radius-md) !important;
+}
+
+.rounded-sm {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Structural Micro-Animations Framework */
+.fade-in {
+  animation: homeFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes homeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   6. RESPONSIVE SCALE MEDIA QUERIES
+   ========================================================================== */
+
+/* Large Desktop Threshold (1200px and up) */
+@media (min-width: 1200px) {
+  h1 { font-size: 3.5rem; }
+  h2 { font-size: 2.5rem; }
+  h3 { font-size: 1.75rem; }
+}
+
+/* Laptop Resolution Tier (Below 1200px) */
+@media (max-width: 1199px) {
+  h1 { font-size: 3rem; }
+  h2 { font-size: 2.25rem; }
+  h3 { font-size: 1.5rem; }
+}
+
+/* Medium Tablet Structural Boundary (Below 992px) */
+@media (max-width: 991px) {
+  .section {
+    padding: var(--section-padding-tablet);
+  }
+  
+  .container {
+    padding-left: var(--inline-padding-tablet);
+    padding-right: var(--inline-padding-tablet);
+  }
+
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.35rem; }
+}
+
+/* Small Device / Phablet Transition Tier (Below 768px) */
+@media (max-width: 767px) {
+  .section {
+    padding: var(--section-padding-mobile);
+  }
+
+  .container {
+    padding-left: var(--inline-padding-mobile);
+    padding-right: var(--inline-padding-mobile);
+  }
+
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.25rem; }
+}
+
+/* Ultra-Compact Smartphone Tier (Below 576px) */
+@media (max-width: 575px) {
+  body {
+    font-size: 0.95rem;
+  }
+  
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  
+  .page-spacing {
+    gap: 1.25rem;
+  }
+}

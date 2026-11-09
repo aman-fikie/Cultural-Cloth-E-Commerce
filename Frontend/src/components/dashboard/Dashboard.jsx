@@ -1,203 +1,201 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../../api/api';
-import styles from './Dashboard.module.css';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
+import { FiStar } from "react-icons/fi";
+
+import { useDashboard } from "./hooks/useDashboard";
+import { formatCurrency } from "./utils/formatCurrency";
+
+import Sidebar from "./components/Sidebar";
+import TopNavbar from "./components/TopNavbar";
+import StatsCards from "./components/StatsCards";
+import RevenueChart from "./components/RevenueChart";
+import SalesPieChart from "./components/SalesPieChart";
+import OrdersTable from "./components/OrdersTable";
+import QuickActions from "./components/QuickActions";
+import Notifications from "./components/Notifications";
+import LowStock from "./components/LowStock";
+import Footer from "./components/Footer";
+
+import "./Dashboard.css";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState('');
+  const {
+    isSidebarCollapsed,
+    isMobileDrawerOpen,
+    activeTab,
+    searchQuery,
+    notifications,
+    unreadCount,
+    // sellerProfile, // We will override this with real database info from localStorage
+    stats,
+    monthlyRevenue,
+    categorySales,
+    weeklyOrders,
+    recentOrders,
+    products,
+    setActiveTab,
+    setSearchQuery,
+    toggleSidebar,
+    toggleMobileDrawer,
+    markNotificationAsRead,
+  } = useDashboard();
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        // Send a request to profile.php
-        // withCredentials tells axios to attach session cookies
-        const response = await api.get('/profile.php');
-        
-        if (response.data.success) {
-          setUser(response.data.user);
-        } else {
-          throw new Error("Failed to read user configuration.");
-        }
-      } catch (err) {
-        console.error("Dashboard mount authentication failed:", err);
-        setErrorMsg("Your session expired. Redirecting back to login secure portal...");
-        
-        // Clean up local states and redirect to login page
-        localStorage.removeItem('user');
-        setTimeout(() => {
-          navigate('/login');
-        }, 2000);
-      } finally {
-        setLoading(false);
-      }
-    };
+  // 1. Retrieve the authenticated user stored during login
+  const storedUser = JSON.parse(localStorage.getItem("user_info") || "{}");
 
-    fetchProfile();
-  }, [navigate]);
-
-  const handleLogout = async () => {
-    try {
-      await api.get('/logout.php');
-    } catch (err) {
-      console.error("Session cleanup request failed:", err);
-    } finally {
-      localStorage.removeItem('user');
-      navigate('/login');
+  // 2. Format profile avatar URL from Laravel uploads
+  const buildAvatarUrl = (path) => {
+    if (!path) {
+      return `https://ui-avatars.com/api/?name=${encodeURIComponent(storedUser.name || "Seller")}&background=7A1E2C&color=fff`;
     }
+    return path.startsWith("http") ? path : `http://localhost:8000/${path}`;
   };
 
-  if (loading) {
-    return (
-      <div className={styles.centerState}>
-        <div className={styles.spinner}></div>
-        <p style={{ marginTop: '16px', color: '#7A1E2C', fontWeight: '500' }}>
-          Initializing Secure Session...
-        </p>
-      </div>
-    );
-  }
-
-  if (errorMsg) {
-    return (
-      <div className={styles.centerState}>
-        <p className={styles.errorMessage}>{errorMsg}</p>
-      </div>
-    );
-  }
+  // 3. Build live profile object from actual DB values
+  const liveSellerProfile = {
+    name: storedUser.name || "Seller",
+    storeName: storedUser.shop_name || "Cultural Cloth Store",
+    role: "Seller",
+    avatar: buildAvatarUrl(storedUser.profile_image),
+  };
 
   return (
-    <div className={styles.dashboardWrapper}>
-      {/* TOP NAVBAR */}
-      <nav className={styles.navbar}>
-        <div className={styles.brandLogo}>Cultural Cloth</div>
-        <div className={styles.navActions}>
-          <span className={styles.welcomeMsg}>Welcome, {user?.full_name}</span>
-          <button onClick={handleLogout} className={styles.logoutBtn}>
-            Logout
-          </button>
-        </div>
-      </nav>
+    <div className="dashboard-layout-root">
+      <Sidebar
+        isCollapsed={isSidebarCollapsed}
+        toggleSidebar={toggleSidebar}
+        isMobileOpen={isMobileDrawerOpen}
+        toggleMobile={toggleMobileDrawer}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
 
-      {/* DASHBOARD CORE CONTENT */}
-      <main className={styles.mainContainer}>
-        
-        {/* PROFILE SIDEBAR CARD */}
-        <aside className={`${styles.card} styles.profileCard`}>
-          <div className={styles.avatarFrame}>
-            {user?.profile_image ? (
-              <img 
-                src={`http://localhost/Ecommerce/backend/${user.profile_image}`} 
-                alt="Profile Avatar" 
-                className={styles.avatarImage}
+      <div className="dashboard-main-wrapper">
+        {/* Pass live profile object to TopNavbar */}
+        <TopNavbar
+          profile={liveSellerProfile}
+          toggleMobile={toggleMobileDrawer}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          unreadCount={unreadCount}
+        />
+
+        <main className="dashboard-content-area">
+          {/* 1. Welcome Banner displaying authenticated DB user */}
+          <motion.section
+            className="welcome-banner"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="welcome-text">
+              <h2>Welcome back, {liveSellerProfile.name} ❖</h2>
+              <p>
+                Your store performance is up <strong>+14.2%</strong> this month.
+                You have 12 pending orders awaiting fulfillment.
+              </p>
+            </div>
+          </motion.section>
+
+          {/* 2. Quick Operations */}
+          <QuickActions />
+
+          {/* 3. Statistics Grid */}
+          <StatsCards stats={stats} />
+
+          {/* 4. Analytics Grid */}
+          <div className="analytics-grid">
+            <RevenueChart data={monthlyRevenue} />
+            <SalesPieChart data={categorySales} />
+          </div>
+
+          {/* 5. Weekly Orders Bar Chart */}
+          <div className="chart-card">
+            <div className="chart-card-header">
+              <div>
+                <h3 className="chart-title">Weekly Orders Overview</h3>
+                <p className="chart-subtitle">
+                  Daily order volume distribution
+                </p>
+              </div>
+            </div>
+            <div style={{ width: "100%", height: 260 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={weeklyOrders}>
+                  <XAxis
+                    dataKey="day"
+                    stroke="#757575"
+                    fontSize={12}
+                    tickLine={false}
+                  />
+                  <YAxis stroke="#757575" fontSize={12} tickLine={false} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: "#FFFFFF",
+                      borderRadius: "8px",
+                      border: "1px solid #C8A44D",
+                    }}
+                  />
+                  <Bar dataKey="orders" fill="#7A1E2C" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* 6. Best Selling Products Section */}
+          <div className="best-sellers-section">
+            <h3 className="section-title">Best Selling Products</h3>
+            <div className="best-sellers-grid">
+              {products?.map((prd) => (
+                <div key={prd.id} className="best-seller-card">
+                  <img
+                    src={prd.image}
+                    alt={prd.name}
+                    className="best-seller-img"
+                  />
+                  <div className="best-seller-info">
+                    <h4>{prd.name}</h4>
+                    <span className="best-seller-category">{prd.category}</span>
+                    <div className="best-seller-metrics">
+                      <span>
+                        <strong>{prd.unitsSold}</strong> units sold
+                      </span>
+                      <span>
+                        <strong>{formatCurrency(prd.revenue)}</strong>
+                      </span>
+                    </div>
+                    <div className="best-seller-rating">
+                      <FiStar className="star-icon" /> {prd.rating}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 7. Orders Table & Side Widgets */}
+          <div className="bottom-sections-grid">
+            <OrdersTable orders={recentOrders} />
+            <div className="widgets-column">
+              <LowStock products={products} />
+              <Notifications
+                notifications={notifications}
+                onMarkAsRead={markNotificationAsRead}
               />
-            ) : (
-              <span className={styles.avatarPlaceholder}>👤</span>
-            )}
-          </div>
-          <h2 className={styles.profileName}>{user?.full_name}</h2>
-          <p className={styles.profileEmail}>{user?.email}</p>
-
-          <div className={styles.profileDetailsList}>
-            <div className={styles.detailItem}>
-              <span className={styles.detailLabel}>Phone Number</span>
-              <span className={styles.detailValue}>{user?.phone || 'Not Specified'}</span>
-            </div>
-            <div className={styles.detailItem}>
-              <span className={styles.detailLabel}>Gender</span>
-              <span className={styles.detailValue}>{user?.gender || 'Not Specified'}</span>
-            </div>
-            <div className={styles.detailItem}>
-              <span className={styles.detailLabel}>Location</span>
-              <span className={styles.detailValue}>{user?.location || 'Not Specified'}</span>
-            </div>
-            <div className={styles.detailItem}>
-              <span className={styles.detailLabel}>Member Since</span>
-              <span className={styles.detailValue}>
-                {user?.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A'}
-              </span>
             </div>
           </div>
-        </aside>
+        </main>
 
-        {/* WORKSPACE & ACTIONS LIST */}
-        <section className={styles.workspace}>
-          
-          {/* Quick Actions Panel */}
-          <div className={styles.card}>
-            <h3 className={styles.sectionTitle}>Quick Account Operations</h3>
-            <div className={styles.quickActionsGrid}>
-              <div className={styles.actionTile}>
-                <span className={styles.actionIcon}>🛍️</span>
-                <span className={styles.actionText}>My Orders</span>
-              </div>
-              <div className={styles.actionTile}>
-                <span className={styles.actionIcon}>❤️</span>
-                <span className={styles.actionText}>Wishlist</span>
-              </div>
-              <div className={styles.actionTile}>
-                <span className={styles.actionIcon}>🛒</span>
-                <span className={styles.actionText}>Active Cart</span>
-              </div>
-              <div className={styles.actionTile}>
-                <span className={styles.actionIcon}>⚙️</span>
-                <span className={styles.actionText}>Settings</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Conditional Shop Details Card */}
-          {user?.shop_name && (
-            <div className={styles.card}>
-              <h3 className={styles.sectionTitle}>Merchant Shop Profile</h3>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                <div>
-                  <p style={{ margin: '0 0 8px' }}>
-                    <strong>Shop Name:</strong> {user.shop_name}
-                  </p>
-                  <p style={{ margin: '0 0 8px' }}>
-                    <strong>Active Hours:</strong> {user.start_time} - {user.end_time}
-                  </p>
-                  <p style={{ margin: '0 0 8px' }}>
-                    <strong>Shop Description:</strong> {user.shop_description || 'No description added yet.'}
-                  </p>
-                </div>
-                <div>
-                  {user.business_license && (
-                    <p style={{ margin: '0 0 8px' }}>
-                      <strong>Business License:</strong>{' '}
-                      <a 
-                        href={`http://localhost/Ecommerce/backend/${user.business_license}`} 
-                        target="_blank" 
-                        rel="noreferrer"
-                        style={{ color: '#7A1E2C', fontWeight: 'bold', textDecoration: 'underline' }}
-                      >
-                        Verify PDF Document
-                      </a>
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Order Summary Placeholder */}
-          <div className={styles.card}>
-            <h3 className={styles.sectionTitle}>Recent Activities</h3>
-            <div style={{ padding: '30px', textAlign: 'center', color: '#666', border: '1px dashed #C8A44D', borderRadius: '8px' }}>
-              Your order timeline is currently empty. Start searching the collections!
-            </div>
-          </div>
-
-        </section>
-      </main>
-
-      {/* FOOTER */}
-      <footer className={styles.footer}>
-        &copy; {new Date().getFullYear()} Cultural Cloth. All Rights Reserved.
-      </footer>
+        <Footer />
+      </div>
     </div>
   );
 }
